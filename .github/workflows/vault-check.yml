@@ -2,7 +2,7 @@ name: Vault Checker
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # Runs every 5 minutes
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,22 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ⬇️ Checkout repository
+    - name: Checkout repo
       uses: actions/checkout@v3
 
-    - name: 🟢 Set up Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 20
 
-    - name: 📦 Install dependencies
+    - name: Install dependencies
       run: npm install
 
-    - name: 🔐 Create .env file from GitHub Secrets
+    - name: Run script
+      env:
+        EMAIL_USER: ${{ secrets.EMAIL_USER }}
+        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
       run: |
-        echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
-        echo "EMAIL_PASS=${{ secrets.EMAIL_PASS }}" >> .env
-        echo "FIREBASE_SERVICE_ACCOUNT='${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'" >> .env
-
-    - name: 🚀 Run Vault Checker Script
-      run: node index.js
+        node index.js
