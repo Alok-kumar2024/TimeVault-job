@@ -2,7 +2,7 @@ name: Vault Checker
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # Runs every 5 minutes
+    - cron: "*/5 * * * *"  # Every 5 minutes
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     - name: 📦 Install dependencies
       run: npm install
 
-    - name: 🔐 Create required env + Firebase key file
+    - name: 🔐 Create .env and Firebase key JSON file
       run: |
         echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
         echo "EMAIL_PASS=${{ secrets.EMAIL_PASS }}" >> .env
