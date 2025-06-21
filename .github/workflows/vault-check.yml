@@ -21,11 +21,11 @@ jobs:
     - name: 📦 Install dependencies
       run: npm install
 
-    - name: 🔐 Create .env file from GitHub Secrets
+    - name: 🔐 Create required env + Firebase key file
       run: |
         echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
         echo "EMAIL_PASS=${{ secrets.EMAIL_PASS }}" >> .env
-        echo "FIREBASE_SERVICE_ACCOUNT=${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" >> .env
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > serviceAccountKey.json
 
     - name: 🚀 Run Vault Checker Script
       run: node index.js
